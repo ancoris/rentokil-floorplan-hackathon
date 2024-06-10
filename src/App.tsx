@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import styles from "./App.module.scss";
 import { Map } from "./components/Map";
-import { PrimaryNavigation } from "./components/PrimaryNavigation";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -9,6 +9,8 @@ import { PolygonEditor } from "./components/PolygonEditor";
 import { GeoJsonArea } from "./components/GeoJsonArea";
 import { SiteInfo } from "./components/SiteInfo/SiteInfo";
 import { AtRiskList } from "./components/AtRiskList/AtRiskList";
+import { Header } from "./components/Header/Header";
+import Logo from "../src/assets/ancoris-logo.svg" assert { type: "png" };
 
 const enum InfoType {
     siteInfo = "siteInfo",
@@ -22,13 +24,12 @@ function App() {
     const [map, setMap] = useState<google.maps.Map | null>(null);
 
     const app = initializeApp({
-        apiKey: "AIzaSyBWjMNpB8OfCyVhcARQUMBh9bDzrcxBOpc",
-        authDomain: "rentokil-map-area-mini-hack.firebaseapp.com",
-        projectId: "rentokil-map-area-mini-hack",
-        storageBucket: "rentokil-map-area-mini-hack.appspot.com",
-        messagingSenderId: "622316479711",
-        appId: "1:622316479711:web:76f9c31911ffd9284df56a",
-        measurementId: "G-R1Y623L7QJ",
+        apiKey: "AIzaSyD7EmsrEvkdxUffWtw0amCJiKVKmqp8DZ4",
+        authDomain: "anc-generic-heatmap.firebaseapp.com",
+        projectId: "anc-generic-heatmap",
+        storageBucket: "anc-generic-heatmap.appspot.com",
+        messagingSenderId: "522511250804",
+        appId: "1:522511250804:web:f1c2c5c4cb3327cd13e821",
     });
     getAnalytics(app);
     const [showSidebar, setShowSidebar] = useState(false);
@@ -54,7 +55,7 @@ function App() {
     const siteDetails = () => {
         return (
             <>
-                <div className="areaCalc">
+                <div className={styles.areaCalc}>
                     <PolygonEditor {...{ lastClickedFeatureIds }} />
                     <GeoJsonArea
                         {...{
@@ -79,7 +80,17 @@ function App() {
 
     return (
         <>
-            <PrimaryNavigation />
+            <div className={styles.top}>
+                <Header
+                    logo={
+                        <img
+                        src={Logo}
+                        alt="Ancoris Logo"
+                    />
+                    }
+                    title="Heatmap"
+                />
+            </div>
             <Sidebar
                 content={
                     activeInfoType == InfoType.siteInfo ? (
